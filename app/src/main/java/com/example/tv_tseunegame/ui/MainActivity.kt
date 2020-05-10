@@ -12,10 +12,11 @@
  * the License.
  */
 
-package com.example.tv_tseunegame
+package com.example.tv_tseunegame.ui
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.example.tv_tseunegame.R
 
 /**
  * Loads [MainFragment].

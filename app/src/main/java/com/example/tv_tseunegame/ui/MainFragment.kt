@@ -12,14 +12,14 @@
  * the License.
  */
 
-package com.example.tv_tseunegame
+package com.example.tv_tseunegame.ui
 
-import android.media.Image
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.*
+import com.example.tv_tseunegame.R
 
 
 /**
@@ -40,8 +40,12 @@ class MainFragment : BrowseSupportFragment() {
         title = "Tseunegame TV"
         headersState = HEADERS_ENABLED
         isHeadersTransitionOnBackEnabled = true
-        brandColor = ContextCompat.getColor(requireContext(), R.color.primary_darker)
-        searchAffordanceColor = ContextCompat.getColor(requireContext(), R.color.primary_lighter)
+        brandColor = ContextCompat.getColor(requireContext(),
+            R.color.primary_darker
+        )
+        searchAffordanceColor = ContextCompat.getColor(requireContext(),
+            R.color.primary_lighter
+        )
 
     }
 
