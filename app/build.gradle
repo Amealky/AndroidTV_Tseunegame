@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -15,10 +16,16 @@ android {
     }
 
     buildTypes {
+        all {
+            it.buildConfigField "String", "API_BASE_URL", API_BASE_URL
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
     }
 
 }
@@ -29,4 +36,20 @@ dependencies {
     implementation 'androidx.leanback:leanback:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
+
+
+    //RETROFIT FOR HTTP
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+    //Retrofit Live Data adapter
+    implementation 'com.github.leonardoxh:retrofit2-livedata-adapter:1.1.2'
+
+    //Retrofit Converter Moshi
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+
+    //Moshi
+    implementation 'com.squareup.moshi:moshi:1.9.1'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.6.0'
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
 }
