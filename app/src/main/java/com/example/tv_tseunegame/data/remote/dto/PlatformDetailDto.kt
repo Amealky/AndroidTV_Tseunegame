@@ -3,7 +3,9 @@ package com.example.tv_tseunegame.data.remote.dto
 import com.example.tv_tseunegame.data.local.entities.GenreEntity
 import com.example.tv_tseunegame.data.local.entities.PlatformEntity
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class PlatformDetailDto(@Json(name = "image")
                           val image: String? = null,
                              @Json(name = "games_count")

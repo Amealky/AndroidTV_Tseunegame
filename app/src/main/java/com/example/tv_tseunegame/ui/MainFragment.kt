@@ -15,11 +15,16 @@
 package com.example.tv_tseunegame.ui
 
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+
 import com.example.tv_tseunegame.R
+import com.example.tv_tseunegame.ui.presenter.GameItemView
+import com.example.tv_tseunegame.ui.presenter.GamePresenter
+import com.example.tv_tseunegame.viewmodels.GamesViewModel
 
 
 /**
@@ -27,13 +32,24 @@ import com.example.tv_tseunegame.R
  */
 class MainFragment : BrowseSupportFragment() {
 
+    private lateinit var viewModel: GamesViewModel
+    private val windowAdapter = ArrayObjectAdapter(ListRowPresenter())
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        init()
+
         setUI()
 
-        loadRow()
+        subscribeToModel(viewModel)
+
+    }
+
+    private fun init(){
+        //Inject dependance dynamically
+        val factory = GamesViewModel.Factory(requireActivity().application)
+        viewModel = ViewModelProviders.of(this, factory).get(GamesViewModel::class.java)
     }
 
     private fun setUI(){
@@ -49,41 +65,24 @@ class MainFragment : BrowseSupportFragment() {
 
     }
 
-    private fun loadRow(){
-        val menuCategorie = HeaderItem(0, "Jeux")
-        val menuAdapter =  ArrayObjectAdapter(GamePresenter())
+    private fun subscribeToModel(gamesViewModel: GamesViewModel) {
 
-        menuAdapter.add(GameItemView("Mario bros"))
-        menuAdapter.add(GameItemView("Pokemon"))
+        gamesViewModel.getGames().observe(viewLifecycleOwner, Observer { games ->
+            val menuAdapter =  ArrayObjectAdapter(GamePresenter(requireContext()))
+            val menuCategorie = HeaderItem(0, "Jeux")
 
-        val windowAdapter = ArrayObjectAdapter(ListRowPresenter())
-        windowAdapter.add(ListRow(menuCategorie, menuAdapter))
+            games.forEach { game ->
+                menuAdapter.add(GameItemView(game.name, game.backgroundImage))
+            }
 
-        adapter = windowAdapter
-    }
+            windowAdapter.add(ListRow(menuCategorie, menuAdapter))
 
-    inner class GamePresenter : Presenter() {
-        override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
-            val icv = ImageCardView(parent?.context)
-            icv.cardType = BaseCardView.CARD_TYPE_INFO_UNDER_WITH_EXTRA
-            icv.infoVisibility = BaseCardView.CARD_REGION_VISIBLE_ACTIVATED
+            adapter = windowAdapter
 
-            return ViewHolder(icv)
-        }
-
-        override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
-            val gameItemView = item as GameItemView
-            val icv = viewHolder?.view as ImageCardView
-            icv.mainImage = requireContext().getDrawable(R.drawable.movie)
-            icv.titleText = gameItemView.name
-            icv.contentText = "Description here"
-        }
-
-        override fun onUnbindViewHolder(viewHolder: ViewHolder?) {
-
-        }
+        })
 
     }
+
 
 
 

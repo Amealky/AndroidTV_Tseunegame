@@ -13,9 +13,7 @@ class GameRepository(private val gameService: GameService) {
     private fun getGamesFromApi() : LiveData<List<GameEntity>> {
 
         mObservableGames.addSource(gameService.getAllGames()) {
-            mObservableGames.postValue(it.resource?.map { gameDto ->
-                gameDto.toEntity()
-            })
+            mObservableGames.postValue(it.resource?.toGames())
 
         }
 

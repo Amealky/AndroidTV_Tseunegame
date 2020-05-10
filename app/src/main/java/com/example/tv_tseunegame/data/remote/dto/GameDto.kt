@@ -2,7 +2,9 @@ package com.example.tv_tseunegame.data.remote.dto
 
 import com.example.tv_tseunegame.data.local.entities.GameEntity
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class GameDto(@Json(name = "added")
                       val added: Int = 0,
                    @Json(name = "suggestions_count")
