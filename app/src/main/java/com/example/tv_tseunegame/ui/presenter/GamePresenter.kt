@@ -39,7 +39,7 @@ class GamePresenter(private val context: Context) : Presenter() {
 
 
         icv.titleText = gameItemView.name
-        icv.contentText = "Description here"
+        icv.contentText = "Rate : " + gameItemView.rate
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder?) {

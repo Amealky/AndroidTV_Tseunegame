@@ -72,7 +72,7 @@ class MainFragment : BrowseSupportFragment() {
             val menuCategorie = HeaderItem(0, "Jeux")
 
             games.forEach { game ->
-                menuAdapter.add(GameItemView(game.name, game.backgroundImage))
+                menuAdapter.add(GameItemView(game.name, game.backgroundImage, game.rate))
             }
 
             windowAdapter.add(ListRow(menuCategorie, menuAdapter))
